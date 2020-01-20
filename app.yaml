@@ -1,0 +1,23 @@
+runtime: php73
+
+automatic_scaling:
+  max_instances: 5
+  target_cpu_utilization: 0.7
+
+env_variables:
+  APP_ENV: prod
+  APP_SECRET: 0ec077f7154acdb4b5ad9c93d585b205
+  DATABASE_URL: mysql://myapi:myapi@localhost?unix_socket=/cloudsql/pass-265708:europe-north1:mysql-1;dbname=symfonydb
+
+handlers:
+  # Declare the build and bundles directory as static assets to be served by the
+  # App Engine CDN.
+  - url: /build
+    static_dir: public/build
+  - url: /bundles
+    static_dir: public/bundles
+
+  # Declare any media files in the public directory as static assets as well.
+  - url: /(.*\.(ico|txt|gif|png|jpg))$
+    static_files: public/\1
+    upload: public/.*\.(ico|txt|gif|png|jpg)$
