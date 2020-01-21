@@ -1,0 +1,20 @@
+FROM php:7.4-apache
+RUN apt-get update -y
+RUN apt-get install -y git
+WORKDIR /var/www
+RUN ls
+RUN git clone https://github.com/shinji02/test.git api
+RUN ls
+RUN a2enmod rewrite
+RUN apt-get install -y libzip-dev
+RUN docker-php-ext-install zip
+RUN apt-get install -y php7.4-mysql
+ADD api.conf /etc/apache2/sites-available/api.conf
+RUN a2dissite 000-default.conf
+RUN a2ensite api.conf
+RUN curl -sS https://getcomposer.org/installer -o composer-setup.php
+RUN php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+WORKDIR /var/www/api
+RUN chown -R www-data:www-data .
+RUN composer install
+EXPOSE 80

@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapi-deployment
+  labels:
+    app: myapi
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: myapi
+  template:
+    metadata:
+      labels:
+        app: myapi
+    spec:
+      containers:
+      - name: myapi
+        image: gcr.io/pass-insset/jovann@sha256:c8d5f5371399a5a2ef1b826f0e847cd8ef8439bee0fe3b1ddd7f901c9514247e
+        ports:
+        - containerPort: 80
