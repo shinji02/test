@@ -14,6 +14,6 @@ class PageController extends AbstractController
      */
     public function number()
     {
-        dd($_SERVER);
+        dd(gethostname());
     }
 }
